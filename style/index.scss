@@ -1,0 +1,36 @@
+@import "reset";
+$red:#871805;
+$black:#000;
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  #app {
+    max-width: 320px;
+    max-height: 320px;
+    height: 100vh;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    .row {
+      border-bottom: 1px solid;
+      display: flex;
+      flex: 1;
+      &:last-child {
+        border-bottom: none;
+      }
+      .box {
+        flex: 1;
+        border-right: 1px solid $black;
+        &:last-child {
+          border-right: none;
+        }
+        &:hover {
+          background: $red;
+        }
+      }
+    }
+  }
+}
