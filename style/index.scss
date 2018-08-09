@@ -23,7 +23,12 @@ body {
       }
       .box {
         flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 44px;
         border-right: 1px solid $black;
+        cursor: pointer;
         &:last-child {
           border-right: none;
         }
