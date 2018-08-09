@@ -1,4 +1,48 @@
 (function IIFE() {
+  const combos = [
+    [
+      [0, 0],
+      [0, 1],
+      [0, 2]
+    ],
+    [
+      [1, 0],
+      [1, 1],
+      [1, 2]
+    ],
+    [
+      [2, 0],
+      [0, 1],
+      [2, 2]
+    ]
+
+    [
+      [0, 0],
+      [1, 0],
+      [2, 0]
+    ],
+    [
+      [0, 1],
+      [1, 1],
+      [2, 1]
+    ],
+    [
+      [2, 0],
+      [1, 2],
+      [2, 2]
+    ],
+
+    [
+      [0, 0],
+      [1, 1],
+      [2, 2]
+    ],
+    [
+      [0, 2],
+      [1, 1],
+      [2, 0]
+    ]
+  ];
   const gameData = [...Array(3)].map(item => [...Array(3)]);
   const app = document.querySelector('#app');
   const cross = 'X';
@@ -17,8 +61,21 @@
       element.addEventListener(key, value));
     return element;
   })
+
+  const checkWinner = () => {
+    const currentChar = turn % 2 === 0 ? cross : circle;
+    const isWinner = combos.some(combo => combo.every(([row, box]) => gameData[row][box] === currentChar));
+    winner ? isWinner : currentChar = null;
+    return isWinner;
+  };
+
   const AddGameData = (row, box) => {
     gameData[row][box] = turn % 2 === 0 ? cross : circle;
+    const isWinner = checkWinner();
+
+    if (isWinner) {
+      turn = turn + 1;
+    }
     render();
   }
   const clearApp = () => {
@@ -34,14 +91,14 @@
         classList: 'row'
       })
       rowData.forEach((boxData, boxIndex) => {
-        const hasValue = !!gameData[rowIndex][boxIndex];
+        const allowClick = !!gameData[rowIndex][boxIndex] || !!winner;
         [boxIndex]
         const box = create({
           tag: 'div',
           classList: 'box',
           textContent: boxData,
           events: {
-            click: () => (hasValue ? null : AddGameData(rowIndex, boxIndex)),
+            click: () => (allowClick ? null : AddGameData(rowIndex, boxIndex)),
           },
         });
         box.classList.add('box');
