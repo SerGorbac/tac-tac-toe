@@ -2,7 +2,8 @@
   const gameData = [...Array(3)].map(item => [...Array(3)]);
   const app = document.querySelector('#app');
   const cross = 'X';
-  const circle = 'O ';
+  const circle = 'O';
+  const turn = 0;
   const create = (({
     tag,
     classList,
@@ -17,7 +18,7 @@
     return element;
   })
   const AddGameData = (row, box) => {
-    gameData[row][box] = cross;
+    gameData[row][box] = turn % 2 === 0 ? cross : circle;
     render();
   }
   const clearApp = () => {
@@ -33,13 +34,15 @@
         classList: 'row'
       })
       rowData.forEach((boxData, boxIndex) => {
+        const hasValue = !!gameData[rowIndex][boxIndex];
+        [boxIndex]
         const box = create({
           tag: 'div',
           classList: 'box',
           textContent: boxData,
           events: {
-            click: () => AddGameData(rowIndex, boxIndex)
-          }
+            click: () => (hasValue ? null : AddGameData(rowIndex, boxIndex)),
+          },
         });
         box.classList.add('box');
         box.textContent = boxData;
